@@ -1,0 +1,75 @@
+[
+  {
+    "uid": "fadc7d1e-0185-47d5-a85b-9a5923aa0a0a",
+    "title": "Note 1",
+    "content": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Hello, world. "
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "strong"
+                }
+              ],
+              "text": "How "
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "strong"
+                },
+                {
+                  "type": "em"
+                }
+              ],
+              "text": "are"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "em"
+                }
+              ],
+              "text": " you"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "strong"
+                }
+              ],
+              "text": "doing"
+            },
+            {
+              "type": "text",
+              "text": "?"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "uid": "050651b9-415a-4fe0-a72f-4561d1831bca",
+    "title": "Note 2",
+    "content": {
+      "type": "doc",
+      "content": []
+    }
+  }
+]
