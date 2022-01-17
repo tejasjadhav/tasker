@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 import { ProseMirror, useProseMirror } from 'use-prosemirror';
-import { deleteNote, setRefreshPending, updateNote } from '../state/taskerSlice';
+import { deleteNote, setRefreshPending, updateNote } from '../state/tasker/slice';
 import { Note } from '../notes/models';
 import { useAppDispatch, useAppSelector } from '../state/hooks';
 import './editor.css';

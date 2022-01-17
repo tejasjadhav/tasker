@@ -1,6 +1,6 @@
-import { Note } from '../notes/models';
+import { Note } from '../../notes/models';
 
-export interface TaskerState {
+export interface State {
   notes: Note[];
   currentNote: Note | null;
   refreshPending: boolean;

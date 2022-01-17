@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import App from './App';
-import notes from './state/stores/store';
+import App from './app/App';
+import notes from './state/store';
 
 ReactDOM.render(
   (

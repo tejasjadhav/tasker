@@ -9,10 +9,10 @@ import {
   Link, useLocation, useNavigate, useParams,
 } from 'react-router-dom';
 import { Plus } from 'react-bootstrap-icons';
-import Editor from './editor/Editor';
-import { addNote, setCurrentNote, unsetRedirectTo } from './state/taskerSlice';
-import NoteList from './notes/NoteList';
-import { useAppDispatch, useAppSelector } from './state/hooks';
+import Editor from '../editor/Editor';
+import { addNote, setCurrentNote, unsetRedirectTo } from '../state/tasker/slice';
+import NoteList from '../notes/NoteList';
+import { useAppDispatch, useAppSelector } from '../state/hooks';
 import './app.css';
 
 function App(): JSX.Element {

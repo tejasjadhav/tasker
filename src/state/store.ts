@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import notesReducer from '../taskerSlice';
-import { Note } from '../../notes/models';
-import { STATE } from '../../constants/constants';
+import reducer from './tasker/slice';
+import { Note } from '../notes/models';
+import { STATE } from '../constants/constants';
 
 function getStoredNotes(): Note[] {
   const notesJson = localStorage.getItem(STATE);
@@ -10,7 +10,7 @@ function getStoredNotes(): Note[] {
 
 const store = configureStore({
   reducer: {
-    tasker: notesReducer,
+    tasker: reducer,
   },
   preloadedState: {
     tasker: {
