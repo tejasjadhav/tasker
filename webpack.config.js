@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
@@ -17,6 +17,7 @@ module.exports = {
   devServer: {
     compress: true,
     port: 5555,
+    historyApiFallback: true,
   },
   output: {
     filename: 'app.[contenthash].js',
@@ -38,5 +39,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  }
+  },
 };

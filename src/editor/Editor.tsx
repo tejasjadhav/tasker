@@ -1,86 +1,56 @@
-import { baseKeymap } from 'prosemirror-commands';
-import { history } from 'prosemirror-history';
-import { keymap } from 'prosemirror-keymap';
-import { EditorState as ProseMirrorEditorState } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import * as React from 'react';
-import { Form } from 'react-bootstrap';
-import { ProseMirror } from 'use-prosemirror';
+import { Button, Form, InputGroup } from 'react-bootstrap';
+import { ProseMirror, useProseMirror } from 'use-prosemirror';
+import { deleteNote, setRefreshPending, updateNote } from '../features/notes/notesSlice';
 import Note from '../models/Note';
+import { useAppDispatch, useAppSelector } from '../stores/hooks';
 import './editor.css';
-import generateKeymap from './keymap';
+import plugins from './plugins';
 import schema from './schema';
 
-interface EditorProps {
-  note: Note;
-  onChange: (note: Note) => void;
+function createEditorState(note: Note): any {
+  return {
+    doc: note ? schema.nodeFromJSON(note.content) : null,
+    schema,
+    plugins: plugins(schema),
+  };
 }
 
-interface EditorState {
-  editorState: ProseMirrorEditorState;
-}
+function Editor(): JSX.Element {
+  const note = useAppSelector((state) => state.notes.currentNote);
+  const refreshPending = useAppSelector((state) => state.notes.refreshPending);
+  const dispatcher = useAppDispatch();
 
-const plugins = [
-  history(),
-  keymap(generateKeymap(schema)),
-  keymap(baseKeymap),
-];
+  const [state, setState] = useProseMirror(createEditorState(note));
 
-class Editor extends React.Component<EditorProps, EditorState, any> {
-  constructor(props: EditorProps) {
-    super(props);
-
-    this.state = {
-      editorState: ProseMirrorEditorState.create({
-        doc: schema.nodeFromJSON(props.note.content),
-        schema,
-        plugins,
-      }),
-    };
+  if (refreshPending) {
+    dispatcher(setRefreshPending(false));
+    setState(EditorState.create(createEditorState(note)));
   }
 
-  componentDidUpdate(prevProps: EditorProps): void {
-    const { note } = this.props;
-
-    if (prevProps.note.uid !== note.uid) {
-      this.setState({
-        editorState: ProseMirrorEditorState.create({
-          doc: schema.nodeFromJSON(note.content),
-          schema,
-          plugins,
-        }),
-      });
-    }
-  }
-
-  onEditorStateChange(note: Note, editorState: ProseMirrorEditorState): void {
-    const { onChange } = this.props;
-    onChange({ ...note, content: editorState.doc.toJSON() });
-
-    this.setState({ editorState });
-  }
-
-  render(): React.ReactNode {
-    const { note, onChange } = this.props;
-    const { editorState } = this.state;
-
-    return (
-      <div>
-        <Form>
+  return (
+    <div>
+      <Form>
+        <InputGroup>
           <Form.Control
             value={note.title}
-            onChange={(e) => onChange({ ...note, title: e.target.value })}
+            onChange={(e) => dispatcher(updateNote({ ...note, title: e.target.value }))}
           />
-        </Form>
-        <ProseMirror
-          state={editorState}
-          onChange={(newEditorState: ProseMirrorEditorState) => {
-            this.onEditorStateChange(note, newEditorState);
-          }}
-          className="editor"
-        />
-      </div>
-    );
-  }
+
+          <Button variant="outline-danger" onClick={() => dispatcher(deleteNote(note))}>Delete</Button>
+        </InputGroup>
+      </Form>
+      <ProseMirror
+        state={state}
+        onChange={(newEditorState: EditorState) => {
+          setState(newEditorState);
+          dispatcher(updateNote({ ...note, content: newEditorState.doc.toJSON() }));
+        }}
+        className="editor"
+      />
+    </div>
+  );
 }
 
 export default Editor;
