@@ -1,14 +1,14 @@
+import { formatDistance } from 'date-fns';
 import * as React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { getSummary } from '../models/Note';
-import { useAppDispatch, useAppSelector } from '../stores/hooks';
+import { useAppSelector } from '../state/hooks';
 
 function NoteList(): JSX.Element {
-  const notes = useAppSelector((state) => state.notes.notes);
-  const currentNote = useAppSelector((state) => state.notes.currentNote);
-  const dispatcher = useAppDispatch();
+  const notes = useAppSelector((state) => state.tasker.notes);
+  const currentNote = useAppSelector((state) => state.tasker.currentNote);
   const navigate = useNavigate();
+  const currentDate = new Date();
 
   return (
     <div>
@@ -21,13 +21,11 @@ function NoteList(): JSX.Element {
             onClick={() => navigate(`/${note.uid}`)}
           >
             <div className="d-flex w-100 justify-content-between">
-              <h5 className="text-truncate">
+              <p className="text-truncate">
                 {note.title}
-              </h5>
-              <small className="flex-shrink-0">3 days ago</small>
+              </p>
+              <small className="flex-shrink-0">{formatDistance(note.updatedAt, currentDate)}</small>
             </div>
-
-            <div className="text-truncate">{getSummary(note)}</div>
           </ListGroup.Item>
         ))}
       </ListGroup>

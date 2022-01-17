@@ -1,10 +1,11 @@
 import { EditorState } from 'prosemirror-state';
 import * as React from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Trash } from 'react-bootstrap-icons';
 import { ProseMirror, useProseMirror } from 'use-prosemirror';
-import { deleteNote, setRefreshPending, updateNote } from '../features/notes/notesSlice';
-import Note from '../models/Note';
-import { useAppDispatch, useAppSelector } from '../stores/hooks';
+import { deleteNote, setRefreshPending, updateNote } from '../state/taskerSlice';
+import { Note } from '../notes/models';
+import { useAppDispatch, useAppSelector } from '../state/hooks';
 import './editor.css';
 import plugins from './plugins';
 import schema from './schema';
@@ -18,8 +19,8 @@ function createEditorState(note: Note): any {
 }
 
 function Editor(): JSX.Element {
-  const note = useAppSelector((state) => state.notes.currentNote);
-  const refreshPending = useAppSelector((state) => state.notes.refreshPending);
+  const note = useAppSelector((state) => state.tasker.currentNote);
+  const refreshPending = useAppSelector((state) => state.tasker.refreshPending);
   const dispatcher = useAppDispatch();
 
   const [state, setState] = useProseMirror(createEditorState(note));
@@ -38,9 +39,12 @@ function Editor(): JSX.Element {
             onChange={(e) => dispatcher(updateNote({ ...note, title: e.target.value }))}
           />
 
-          <Button variant="outline-danger" onClick={() => dispatcher(deleteNote(note))}>Delete</Button>
+          <Button variant="outline-danger" onClick={() => dispatcher(deleteNote(note))}><Trash /></Button>
         </InputGroup>
       </Form>
+
+      <div className="mb-2" />
+
       <ProseMirror
         state={state}
         onChange={(newEditorState: EditorState) => {

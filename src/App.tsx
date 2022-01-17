@@ -5,16 +5,19 @@ import {
   Button,
   Col, Container, Navbar, Row,
 } from 'react-bootstrap';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Link, useLocation, useNavigate, useParams,
+} from 'react-router-dom';
+import { Plus } from 'react-bootstrap-icons';
 import Editor from './editor/Editor';
-import { addNote, setCurrentNote, unsetRedirectTo } from './features/notes/notesSlice';
+import { addNote, setCurrentNote, unsetRedirectTo } from './state/taskerSlice';
 import NoteList from './notes/NoteList';
-import { useAppDispatch, useAppSelector } from './stores/hooks';
+import { useAppDispatch, useAppSelector } from './state/hooks';
 import './app.css';
 
 function App(): JSX.Element {
-  const currentNote = useAppSelector((state) => state.notes.currentNote);
-  const redirectTo = useAppSelector((state) => state.notes.redirectTo);
+  const currentNote = useAppSelector((state) => state.tasker.currentNote);
+  const redirectTo = useAppSelector((state) => state.tasker.redirectTo);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const urlParams = useParams();
@@ -33,10 +36,10 @@ function App(): JSX.Element {
 
   return (
     <>
-      <Navbar sticky="top">
+      <Navbar bg="light" sticky="top">
         <Container fluid>
-          <Navbar.Brand href="#">Tasker</Navbar.Brand>
-          <Button variant="outline-primary" onClick={() => dispatch(addNote())}>Add note</Button>
+          <Navbar.Brand as={Link} to="/">Tasker</Navbar.Brand>
+          <Button variant="outline-primary" onClick={() => dispatch(addNote())}><Plus size={24} /></Button>
         </Container>
       </Navbar>
 
