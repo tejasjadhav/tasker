@@ -1,3 +1,19 @@
 .editor {
   white-space: pre-wrap;
 }
+
+.editor blockquote {
+  padding-left: 1rem;
+  border-left: 0.5rem solid #ccc;
+}
+
+.editor li p {
+  margin-bottom: 0.1rem;
+}
+
+.editor pre code {
+  display: block;
+  padding: 0.5rem;
+  background-color: #f8f8f8;
+  border-radius: 0.5rem;
+}

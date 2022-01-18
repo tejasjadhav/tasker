@@ -30,7 +30,7 @@ export const slice = createSlice({
   reducers: {
     addNote: (state: State) => {
       const note = createNewNote(`Note ${state.notes.length + 1}`);
-      state.notes.push(note);
+      state.notes.unshift(note);
       state.redirectTo = `/${note.uid}`;
     },
     deleteNote: (state: State, action: PayloadAction<Note>) => {
