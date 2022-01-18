@@ -14,11 +14,6 @@ module.exports = {
       title: 'Tasker',
     }),
   ],
-  devServer: {
-    compress: true,
-    port: 5555,
-    historyApiFallback: true,
-  },
   output: {
     filename: 'app.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
