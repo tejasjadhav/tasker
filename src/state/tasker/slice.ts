@@ -49,6 +49,17 @@ export const slice = createSlice({
         }
       }
     },
+    updateNoteContent: (state: State, action: PayloadAction<Note>) => {
+      const note = state.notes.find((note) => note.uid === action.payload.uid);
+      if (note) {
+        note.content = action.payload.content;
+        note.updatedAt = new Date().getTime();
+
+        if (note.uid === state.currentNote.uid) {
+          state.currentNote = note;
+        }
+      }
+    },
     setCurrentNote: (state: State, action: PayloadAction<string>) => {
       const note = state.notes.find((note) => note.uid === action.payload);
       if (note) {
@@ -69,7 +80,8 @@ export const slice = createSlice({
 });
 
 export const {
-  addNote, deleteNote, updateNote, setCurrentNote, setRefreshPending, unsetRedirectTo,
+  addNote, deleteNote, updateNote, updateNoteContent, setCurrentNote, setRefreshPending,
+  unsetRedirectTo,
 } = slice.actions;
 
 export default slice.reducer;
