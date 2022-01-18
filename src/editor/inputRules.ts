@@ -49,9 +49,9 @@ function nodeInputRule(
 
 export default inputRules({
   rules: [
-    markInputRule(/(?:\*\*)([^\*]+)(?:\*\*)$/, schema.marks.strong),
-    markInputRule(/(?:__)([^_]+)(?:__)$/, schema.marks.em),
-    markInputRule(/(?:`)([^`]+)(?:`)$/, schema.marks.code),
+    markInputRule(/(?:\*\*)(.+)(?:\*\*)$/, schema.marks.strong),
+    markInputRule(/(?:__)(.+)(?:__)$/, schema.marks.em),
+    markInputRule(/(?:`)(.+)(?:`)$/, schema.marks.code),
     wrappingInputRule(/^\s*>\s$/, schema.nodes.blockquote),
     wrappingInputRule(
       /^(\d+)\.\s$/,
