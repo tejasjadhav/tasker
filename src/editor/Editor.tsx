@@ -20,8 +20,8 @@ import Text from '@tiptap/extension-text';
 import UniqueID from '@tiptap/extension-unique-id';
 import { EditorContent, useEditor } from '@tiptap/react';
 import * as React from 'react';
-import { Button, Form, InputGroup } from 'react-bootstrap';
-import { Trash } from 'react-bootstrap-icons';
+import { Dropdown, Form, Stack } from 'react-bootstrap';
+import { ThreeDots, Trash } from 'react-bootstrap-icons';
 import { useAppDispatch, useAppSelector } from '../state/hooks';
 import {
   deleteNote, setRefreshPending, updateNote, updateNoteContent,
@@ -81,15 +81,26 @@ function Editor(): JSX.Element {
 
   return (
     <div>
-      <Button variant="outline-danger" onClick={() => dispatcher(deleteNote(note))}><Trash /></Button>
+      <Stack direction="horizontal" gap={3}>
+        <Form.Control
+          value={note.title}
+          className="note-title shadow-none me-auto"
+          placeholder="Title"
+          autoComplete="off"
+          onChange={(e) => dispatcher(updateNote({ ...note, title: e.target.value }))}
+        />
+        <Dropdown className="editor-menu">
+          <Dropdown.Toggle variant="secondary" id="dropdown-basic"><ThreeDots /></Dropdown.Toggle>
 
-      <Form.Control
-        value={note.title}
-        className="note-title shadow-none"
-        placeholder="Title"
-        autoComplete="off"
-        onChange={(e) => dispatcher(updateNote({ ...note, title: e.target.value }))}
-      />
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => dispatcher(deleteNote(note))}>
+              <Trash />
+              {' '}
+              Delete
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Stack>
 
       <div className="mb-2" />
 

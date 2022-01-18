@@ -1,3 +1,7 @@
+.editor-menu .dropdown-toggle::after {
+  display: none !important;
+}
+
 .note-title {
   border: none;
   padding: 0;
