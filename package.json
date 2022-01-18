@@ -22,6 +22,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/prosemirror-commands": "^1.0.4",
     "@types/prosemirror-history": "^1.0.3",
+    "@types/prosemirror-inputrules": "^1.0.4",
     "@types/prosemirror-keymap": "^1.0.4",
     "@types/prosemirror-model": "^1.16.0",
     "@types/prosemirror-schema-basic": "^1.0.2",

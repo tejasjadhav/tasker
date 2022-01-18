@@ -1,3 +1,7 @@
+.ProseMirror:focus-visible {
+  outline: none;
+}
+
 .editor {
   white-space: pre-wrap;
 }
@@ -16,4 +20,12 @@
   padding: 0.5rem;
   background-color: #f8f8f8;
   border-radius: 0.5rem;
+}
+
+.editor hr {
+  margin: 0.5rem 0;
+}
+
+.editor hr:not([size]) {
+  height: 3px;
 }
