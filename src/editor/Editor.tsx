@@ -17,12 +17,15 @@ import Strike from '@tiptap/extension-strike';
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Text from '@tiptap/extension-text';
+import UniqueID from '@tiptap/extension-unique-id';
 import { EditorContent, useEditor } from '@tiptap/react';
 import * as React from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 import { useAppDispatch, useAppSelector } from '../state/hooks';
-import { deleteNote, setRefreshPending, updateNote } from '../state/tasker/slice';
+import {
+  deleteNote, setRefreshPending, updateNote, updateNoteContent,
+} from '../state/tasker/slice';
 import './editor.css';
 
 function Editor(): JSX.Element {
@@ -60,11 +63,14 @@ function Editor(): JSX.Element {
       Placeholder.configure({
         placeholder: 'What\'s on your mind?',
       }),
+      UniqueID.configure({
+        types: ['heading', 'paragraph'],
+      }),
     ],
-    content: note.content,
+    content: note?.content,
     autofocus: true,
     onUpdate({ editor }) {
-      dispatcher(updateNote({ ...note, content: editor.getJSON() }));
+      dispatcher(updateNoteContent({ ...note, content: editor.getJSON() }));
     },
   });
 
@@ -75,16 +81,15 @@ function Editor(): JSX.Element {
 
   return (
     <div>
-      <Form>
-        <InputGroup>
-          <Form.Control
-            value={note.title}
-            onChange={(e) => dispatcher(updateNote({ ...note, title: e.target.value }))}
-          />
+      <Button variant="outline-danger" onClick={() => dispatcher(deleteNote(note))}><Trash /></Button>
 
-          <Button variant="outline-danger" onClick={() => dispatcher(deleteNote(note))}><Trash /></Button>
-        </InputGroup>
-      </Form>
+      <Form.Control
+        value={note.title}
+        className="note-title shadow-none"
+        placeholder="Title"
+        autoComplete="off"
+        onChange={(e) => dispatcher(updateNote({ ...note, title: e.target.value }))}
+      />
 
       <div className="mb-2" />
 
